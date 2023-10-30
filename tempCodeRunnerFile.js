@@ -1,0 +1,1 @@
+'Ocp-Apim-Subscription-Key': BING_API_KEY
