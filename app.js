@@ -1,7 +1,7 @@
 const express = require('express');
 const axios = require('axios');
-const { User} = require('./models/User'); // Importă modelele
-const {Result} = require('./models/Result');
+const User = require('./models/User'); // Importă modelele
+const Result = require('./models/Result');
 require('dotenv').config({ path: 'cheie.env' });
 
 const app = express();
@@ -55,3 +55,4 @@ async function startServer() {
 }
 
 startServer();
+console.log('BING_API_KEY:', BING_API_KEY);
