@@ -1,58 +1,59 @@
 const express = require('express');
-const axios = require('axios');
-const User = require('./models/User'); // Importă modelele
-const Result = require('./models/Result');
+const cors = require('cors');
+//const session = require('express-session');
+//const passport = require('passport');
+//const LocalStrategy = require('passport-local').Strategy;
+const userRoutes = require('./routes/userRoutes');
+const authRoutes = require('./routes/authRoutes');
+const resultRoutes = require('./routes/resultRoutes');
+const User = require('./database/models/User');
+const Result = require('./database/models/Result');
+const {verifyToken} = require('./utils');
 require('dotenv').config({ path: 'cheie.env' });
+
+User.hasMany(Result);
 
 const app = express();
 const port = 3000;
-const BING_API_KEY = process.env.BING_SEARCH_API_KEY;
 
+app.use(cors());
+// Express middleware
 app.use(express.json());
 
-// Definirea relației părinte-copil între User și Result
-User.hasMany(Result);
-Result.belongsTo(User);
+// Setup express-session middleware
+// app.use(session({
+//   secret: 'your-secret-key',
+//   resave: false,
+//   saveUninitialized: false,
+// }));
 
-app.get('/search', async (req, res) => {
-  const { query } = req.query;
+// Initialize Passport
+//app.use(passport.initialize());
+//app.use(passport.session());
 
-  if (!query) {
-    return res.status(400).json({ error: 'Parameter "query" missing' });
-  }
+// Configure passport-local Strategy
+// passport.use(new LocalStrategy(User.authenticate()));
+// passport.serializeUser(User.serializeUser());
+// passport.deserializeUser(User.deserializeUser());
 
-  try {
-    const response = await axios.get('https://api.bing.microsoft.com/v7.0/search', {
-      params: { q: query },
-      headers: {
-        'Ocp-Apim-Subscription-Key': BING_API_KEY,
-      },
-    });
-
-    // Salvează rezultatele în baza de date asociate utilizatorului
-    const user = await User.create({ name: 'Nume Utilizator' });
-    const results = await Result.bulkCreate(response.data.webPages.value.map((item) => ({ content: item.url, UserId: user.id })));
-
-    res.json(results);
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch search results' });
-  }
-});
-
-// Sincronizare cu baza de date și pornirea serverului
+// Synchronize database and start the server
 async function startServer() {
   try {
     await User.sync();
     await Result.sync();
-    console.log('Tabele sincronizate cu succes.');
+    console.log('Tables synchronized successfully.');
+
+    // Use userRoutes and resultRoutes
+    app.use('/user', userRoutes);
+    app.use('/auth', authRoutes);
+    app.use('/result', verifyToken, resultRoutes);
 
     app.listen(port, () => {
-      console.log(`Serverul rulează la adresa http://localhost:${port}`);
+      console.log(`Server is running at http://localhost:${port}`);
     });
   } catch (error) {
-    console.error('Eroare la sincronizarea cu baza de date:', error);
+    console.error('Error synchronizing with the database:', error);
   }
 }
 
 startServer();
-console.log('BING_API_KEY:', BING_API_KEY);
