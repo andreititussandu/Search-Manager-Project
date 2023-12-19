@@ -10,6 +10,7 @@ const User = require('./database/models/User');
 const Result = require('./database/models/Result');
 const {verifyToken} = require('./utils');
 require('dotenv').config({ path: 'cheie.env' });
+require('dotenv').config({path: 'token.env'});
 
 User.hasMany(Result);
 
