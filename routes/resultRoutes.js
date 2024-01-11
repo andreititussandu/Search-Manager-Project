@@ -22,7 +22,7 @@ resultRouter.get('/search', async (req, res) => {
           'Ocp-Apim-Subscription-Key': process.env.BING_API_KEY,
         },
       });
-      console.log('Bing API Response:', response.data);
+      //console.log('Bing API Response:', response.data);
 
 
       const results = await Result.bulkCreate(response.data.webPages.value.map((item) => ({
@@ -38,7 +38,5 @@ resultRouter.get('/search', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch search results' });
   }
 });
-
-// Other routes for Result (TBC)
 
 module.exports = resultRouter;

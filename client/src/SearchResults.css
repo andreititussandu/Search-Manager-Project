@@ -1,0 +1,33 @@
+.search-results {
+    margin-top: 20px;
+  }
+  
+  .results-heading {
+    font-size: 1.5rem;
+    color: #282c34;
+    margin-bottom: 10px;
+  }
+  
+  .results-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .result-item {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f7f7f7;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+  }
+  
+  .result-title {
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .result-content {
+    color: #555;
+  }
+  

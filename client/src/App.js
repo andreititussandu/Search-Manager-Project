@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Login from './Login';
 import Search from './Search';
 import SearchResults from './SearchResults';
+import './Title.css';
 
 const App = () => {
   const [searchResults, setSearchResults] = useState([]);
@@ -18,7 +19,9 @@ const App = () => {
 
   return (
     <div>
-      <h1>Search Manager App</h1>
+      <div className="title-container">
+        <h1 className="title">Search Manager App</h1>
+      </div>
       {!token ? <Login onLogin={handleLogin} /> : <Search onSearch={handleSearch} token={token} />}
       <SearchResults results={searchResults} />
     </div>

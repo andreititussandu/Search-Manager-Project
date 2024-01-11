@@ -1,6 +1,6 @@
-// Search.js
 import React, { useState } from 'react';
 import axios from 'axios';
+import './Search.css';
 
 const Search = ({ onSearch, token }) => {
   const [query, setQuery] = useState('');
@@ -22,10 +22,17 @@ const Search = ({ onSearch, token }) => {
   };
 
   return (
-    <div>
-      <h2>Search</h2>
-      <input type="text" value={query} onChange={(e) => setQuery(e.target.value)} />
-      <button onClick={handleSearch}>Search</button>
+    <div className="search-container">
+      <h2 className="search-heading">Search</h2>
+      <input
+        type="text"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        className="search-input"
+      />
+      <button onClick={handleSearch} className="search-button">
+        Search
+      </button>
     </div>
   );
 };

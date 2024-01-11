@@ -1,6 +1,6 @@
-// Login.js
 import React, { useState } from 'react';
 import axios from 'axios';
+import './Login.css';
 
 const Login = ({ onLogin }) => {
   const [email, setEmail] = useState('');
@@ -12,7 +12,7 @@ const Login = ({ onLogin }) => {
         email: email,
         password: password,
       });
-      console.log('Full Response:', response); 
+      //console.log('Full Response:', response); 
 
       const authToken = response.data.data.token;
       console.log('Received Token:', authToken);
@@ -23,17 +23,29 @@ const Login = ({ onLogin }) => {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
+    <div className="login-container">
+      <h2 className="login-heading">Login</h2>
       <div>
         <label>Email:</label>
-        <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <input
+          type="text"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="login-input"
+        />
       </div>
       <div>
         <label>Password:</label>
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="login-input"
+        />
       </div>
-      <button onClick={handleLogin}>Login</button>
+      <button onClick={handleLogin} className="login-button">
+        Login
+      </button>
     </div>
   );
 };
