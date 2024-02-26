@@ -28,7 +28,7 @@ The Search Manager App is an application that allows users to manage and save se
 3. Change into the project directory.
 4. Run "npm i".
 5. Run "npm run dev".
-6. Open a second terminal in the main directory -> spa.
+6. Open a second terminal in the main directory -> client.
 7. Run "npm i".
 8. Run "npm start".
 9. If the web browser does not appear, navigate to localhost:3000/.
